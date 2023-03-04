@@ -2,13 +2,18 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-train_dir = './data'
-valid_dir = './data'
+import os
+from PIL import Image
+
+train_dir = './data/train'
+valid_dir = './data/validate'
 
 img_width, img_height = 224, 224
 batch_size = 32
-num_epochs = 10
+num_epochs = 50
 num_classes = 2
+
+classes=["cat", "no-cat"]
 
 train_datagen = ImageDataGenerator(rescale=1./255)
 train_generator = train_datagen.flow_from_directory(
@@ -16,7 +21,7 @@ train_generator = train_datagen.flow_from_directory(
     target_size=(img_width, img_height),
     batch_size=batch_size,
     class_mode='categorical',
-    classes=['sunny', 'rainy']
+    classes=classes
 )
 
 valid_datagen = ImageDataGenerator(rescale=1./255)
@@ -25,7 +30,7 @@ valid_generator = valid_datagen.flow_from_directory(
     target_size=(img_width, img_height),
     batch_size=batch_size,
     class_mode='categorical',
-    classes=['sunny', 'rainy']
+    classes=classes
 )
 
 model = keras.Sequential([
